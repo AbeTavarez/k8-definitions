@@ -1,0 +1,25 @@
+# use with: myapp-pod.yml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: my-app # this label will NOT be used to match the pods
+spec:
+  selector:
+    matchLabels:
+      env: prod # this is the label that will be used to match the pods
+  replicas: 3
+  template:
+    metadata:
+      name: my-app
+      labels:
+        env: prod # this is the label that will be used to match the pods
+    spec:
+      containers:
+        - name: my-app
+          image: nginx
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
